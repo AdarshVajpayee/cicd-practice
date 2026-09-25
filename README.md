@@ -54,6 +54,7 @@ def is_even(n):
 `test_app.py` — tests for it, using `pytest`:
 
 ```python
+import pytest
 from app import add, divide, is_even
 
 def test_add():
@@ -61,6 +62,8 @@ def test_add():
 
 def test_divide():
     assert divide(10, 2) == 5
+    with pytest.raises(ValueError):
+        divide(10, 0)
 
 def test_is_even():
     assert is_even(4) is True
