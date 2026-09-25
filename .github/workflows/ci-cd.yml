@@ -61,3 +61,20 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ env.REPO_LC }}:${{ github.sha }}
+  deploy-staging:
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment: staging
+ 
+    steps:
+      - name: "Deploy to staging"
+        run: echo "Deploying image ${{ github.sha }} to STAGING"
+ 
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production
+ 
+    steps:
+      - name: "Deploy to production"
+        run: echo "Deploying image ${{ github.sha }} to PRODUCTION"
