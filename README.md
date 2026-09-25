@@ -9,15 +9,41 @@ No prior CI/CD experience assumed. Follow the steps in order.
 
 ## What you'll end up with
 
+
+## What you'll end up with
+ 
+```mermaid
+flowchart TD
+    A[Push to main] --> B[Lint + Test — CI]
+    B --> C[Build Docker Image]
+    C --> D[Push Image to GHCR]
+    D --> E[Auto-Deploy to Staging]
+    E --> F{Manual Approval}
+    F -->|Approved| G[Deploy to Production]
+ 
+    style A fill:#2d333b,stroke:#58a6ff,color:#fff
+    style B fill:#2d333b,stroke:#3fb950,color:#fff
+    style C fill:#2d333b,stroke:#3fb950,color:#fff
+    style D fill:#2d333b,stroke:#3fb950,color:#fff
+    style E fill:#2d333b,stroke:#d29922,color:#fff
+    style F fill:#3d1f1f,stroke:#f85149,color:#fff
+    style G fill:#1f3d24,stroke:#3fb950,color:#fff
 ```
-push to main
-  → lint + test (CI)
-  → build Docker image
-  → push image to GitHub Container Registry (CD)
-  → auto-deploy to staging
-  → PAUSE — wait for human approval
-  → deploy to production
-```
+ 
+## Tech stack
+ 
+| Tool | Role |
+|---|---|
+| **Git** | Version control — tracks every code change locally |
+| **GitHub** | Remote repo hosting, where the code and pipeline live |
+| **GitHub Actions** | CI/CD engine — runs the pipeline automatically on every push |
+| **YAML** | The language the pipeline (`ci-cd.yml`) is written in |
+| **Python** | The application language (`app.py`) |
+| **pytest** | Testing framework — runs `test_app.py` |
+| **flake8** | Linter — checks code style/quality before tests run |
+| **Docker** | Packages the app into a portable container image |
+| **GitHub Container Registry (GHCR)** | Where the built Docker image is stored/versioned |
+| **GitHub Environments** | Defines `staging` and `production` targets with approval rules |
 
 ## Project structure
 
